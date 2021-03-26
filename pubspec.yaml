@@ -23,6 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  device_preview: ^0.7.1
+  toggle_switch: "^0.1.8" # togglebutton
+  fl_chart: ^0.30.0 # grafik/chart paketi
+  date_range_picker: ^1.0.7 # tarih aralığı seçme
+  provider: ^5.0.0 # provider paketi
+  sqflite: any # sql için
+  path_provider: ^2.0.1 # dosya okuma - sql için
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,7 +67,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: asset/fonts/Ubuntu-Light.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
