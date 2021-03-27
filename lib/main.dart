@@ -2,7 +2,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sigara_metre/pages/chart/chart_page.dart';
 import 'package:sigara_metre/pages/home/home_page.dart';
+import 'package:sigara_metre/provider/chart_provider.dart';
 import 'package:sigara_metre/provider/home_provider.dart';
 
 void main() {
@@ -29,7 +31,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Ubuntu',
       ),
       title: 'Sigara Sayar',
-      home: ChangeNotifierProvider<HomeProvider>(
+      home:
+          // ChangeNotifierProvider<ChartProvider>(
+          //   create: (_) => ChartProvider(),
+          //   child: ChartPage(),
+          // ),
+          ChangeNotifierProvider<HomeProvider>(
         create: (_) => HomeProvider(),
         child: HomePage(),
       ),

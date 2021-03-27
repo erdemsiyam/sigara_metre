@@ -42,7 +42,9 @@ class LastTextsWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         animationText(context, 'Last', 1),
+        context.emptyWidgetHeightMedium,
         animationText(context, 'Today', 2),
+        context.emptyWidgetHeightMedium,
         animationText(context, 'Total', 3),
       ],
     );
@@ -60,6 +62,7 @@ class LastTextsWidget extends StatelessWidget {
               : '',
           1,
         ),
+        context.emptyWidgetHeightMedium,
         animationText(
           context,
           (_homeProvider.areCountsVisible)
@@ -67,6 +70,7 @@ class LastTextsWidget extends StatelessWidget {
               : '',
           2,
         ),
+        context.emptyWidgetHeightMedium,
         animationText(
           context,
           (_homeProvider.areCountsVisible)
