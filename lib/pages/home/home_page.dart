@@ -13,6 +13,8 @@ class HomePage extends StatelessWidget {
   Stress _stress;
   @override
   Widget build(BuildContext context) {
+    _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    initData();
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
@@ -29,6 +31,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void initData() {
+    if (_homeProvider.textState == TextState.INIT) {
+      _homeProvider.getCounts();
+    }
   }
 
   Widget rightButton(BuildContext context) {
@@ -105,7 +113,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget addButton(BuildContext context) {
-    _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     return SizedBox(
       width: context.dynamicShortest(0.13),
       height: context.dynamicShortest(0.13),

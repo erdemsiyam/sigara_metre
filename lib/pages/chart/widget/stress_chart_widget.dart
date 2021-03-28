@@ -1,41 +1,55 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sigara_metre/provider/chart_provider.dart';
 import 'package:sigara_metre/util/context_extension.dart';
 
 class StressChartWidget extends StatelessWidget {
-  List<FlSpot> flSpotsFine = [];
-  List<FlSpot> flSpotsNormal = [];
-  List<FlSpot> flSpotsStress = [];
+  ChartProvider _chartProvider;
   @override
   Widget build(BuildContext context) {
-    flSpotsFine.add(FlSpot(1, 0));
-    flSpotsFine.add(FlSpot(2, 1));
-    flSpotsFine.add(FlSpot(3, 0));
-    // flSpotsFine.add(FlSpot(4, 0));
-    // flSpotsFine.add(FlSpot(5, 0));
-    // flSpotsFine.add(FlSpot(6, 0));
-    // flSpotsFine.add(FlSpot(7, 0));
+    // flSpotsFine.add(FlSpot(1, 0));
+    // flSpotsFine.add(FlSpot(2, 1));
+    // flSpotsFine.add(FlSpot(3, 0));
+    // // flSpotsFine.add(FlSpot(4, 0));
+    // // flSpotsFine.add(FlSpot(5, 0));
+    // // flSpotsFine.add(FlSpot(6, 0));
+    // // flSpotsFine.add(FlSpot(7, 0));
 
-    // flSpotsNormal.add(FlSpot(1, 0));
-    flSpotsNormal.add(FlSpot(2, 0));
-    flSpotsNormal.add(FlSpot(3, 3));
-    flSpotsNormal.add(FlSpot(4, 2));
-    flSpotsNormal.add(FlSpot(5, 0));
-    flSpotsNormal.add(FlSpot(6, 2));
-    flSpotsNormal.add(FlSpot(7, 1));
-    flSpotsNormal.add(FlSpot(8, 0));
-    // flSpotsNormal.add(FlSpot(6, 0));
-    // flSpotsNormal.add(FlSpot(7, 0));
+    // // flSpotsNormal.add(FlSpot(1, 0));
+    // flSpotsNormal.add(FlSpot(2, 0));
+    // flSpotsNormal.add(FlSpot(3, 3));
+    // flSpotsNormal.add(FlSpot(4, 2));
+    // flSpotsNormal.add(FlSpot(5, 0));
+    // flSpotsNormal.add(FlSpot(6, 2));
+    // flSpotsNormal.add(FlSpot(7, 1));
+    // flSpotsNormal.add(FlSpot(8, 0));
+    // // flSpotsNormal.add(FlSpot(6, 0));
+    // // flSpotsNormal.add(FlSpot(7, 0));
 
-    // flSpotsStress.add(FlSpot(1, 0));
-    // flSpotsStress.add(FlSpot(2, 0));
-    // flSpotsStress.add(FlSpot(3, 0));
-    // flSpotsStress.add(FlSpot(4, 0));
-    flSpotsStress.add(FlSpot(5, 0));
-    flSpotsStress.add(FlSpot(6, 5));
-    flSpotsStress.add(FlSpot(7, 2));
-    flSpotsStress.add(FlSpot(8, 0));
+    // // flSpotsStress.add(FlSpot(1, 0));
+    // // flSpotsStress.add(FlSpot(2, 0));
+    // // flSpotsStress.add(FlSpot(3, 0));
+    // // flSpotsStress.add(FlSpot(4, 0));
+    // flSpotsStress.add(FlSpot(5, 0));
+    // flSpotsStress.add(FlSpot(6, 5));
+    // flSpotsStress.add(FlSpot(7, 2));
+    // flSpotsStress.add(FlSpot(8, 0));
 
+    _chartProvider = Provider.of<ChartProvider>(context);
+    switch (_chartProvider.chartData) {
+      case ChartData.INIT:
+      case ChartData.LOADING:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [CircularProgressIndicator()],
+        );
+      case ChartData.DONE:
+        return chart(context);
+    }
+  }
+
+  Widget chart(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Container(
@@ -141,7 +155,7 @@ class StressChartWidget extends StatelessWidget {
 
   LineChartBarData linesBarDataFine(BuildContext context) {
     return LineChartBarData(
-      spots: flSpotsFine,
+      spots: _chartProvider.spotStressLow,
       isCurved: false,
       colors: [
         Colors.green,
@@ -159,7 +173,7 @@ class StressChartWidget extends StatelessWidget {
 
   LineChartBarData linesBarDataNormal(BuildContext context) {
     return LineChartBarData(
-      spots: flSpotsNormal,
+      spots: _chartProvider.spotStressMedium,
       isCurved: false,
       colors: [
         Colors.blue,
@@ -177,7 +191,7 @@ class StressChartWidget extends StatelessWidget {
 
   LineChartBarData linesBarDataStress(BuildContext context) {
     return LineChartBarData(
-      spots: flSpotsStress,
+      spots: _chartProvider.spotStressHigh,
       isCurved: false,
       colors: [
         Colors.red,

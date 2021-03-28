@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sigara_metre/pages/chart/widget/smoke_chart_widget.dart';
 import 'package:sigara_metre/pages/chart/widget/stress_chart_widget.dart';
+import 'package:sigara_metre/provider/chart_provider.dart';
 import 'package:sigara_metre/util/context_extension.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 
 class ChartPage extends StatelessWidget {
+  ChartProvider _chartProvider;
   @override
   Widget build(BuildContext context) {
+    _chartProvider = Provider.of<ChartProvider>(context, listen: false);
+
+    initData();
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
@@ -37,6 +44,13 @@ class ChartPage extends StatelessWidget {
     );
   }
 
+  void initData() {
+    // ilk veri çekilir
+    if (_chartProvider.chartData == ChartData.INIT) {
+      _chartProvider.getChartsData(DateTime.now(), DateTime.now());
+    }
+  }
+
   Widget topButtons(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -59,10 +73,48 @@ class ChartPage extends StatelessWidget {
             color: Colors.blue,
           ),
           onPressed: () {
-            // TODO  delete
+            customShowDialog(context);
           },
         ),
       ],
+    );
+  }
+
+  void customShowDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text('Delete All Data'),
+          content: Text('Dou you want to delete all data?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _chartProvider.deleteAllData();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Delete',
+                style: context.theme.textTheme.bodyText1.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: context.theme.textTheme.bodyText1,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -94,8 +146,7 @@ class ChartPage extends StatelessWidget {
       lastDate: DateTime(2022),
     );
     if (picked != null && picked.length == 2) {
-      // TODO alttakini aç
-      // _smokeProvider.getChartsData(picked[0], picked[1]);
+      _chartProvider.getChartsData(picked[0], picked[1]);
     }
   }
 }

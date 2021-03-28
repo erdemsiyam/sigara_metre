@@ -1,18 +1,34 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sigara_metre/provider/chart_provider.dart';
 import 'package:sigara_metre/util/context_extension.dart';
 
 class SmokeChartWidget extends StatelessWidget {
-  List<FlSpot> flSpots = [];
+  ChartProvider _chartProvider;
   @override
   Widget build(BuildContext context) {
-    flSpots.add(FlSpot(1, 1));
-    flSpots.add(FlSpot(2, 0));
-    flSpots.add(FlSpot(3, 2));
-    flSpots.add(FlSpot(4, 0));
-    flSpots.add(FlSpot(5, 3));
-    flSpots.add(FlSpot(6, 0));
-    flSpots.add(FlSpot(23, 4));
+    // flSpots.add(FlSpot(1, 1));
+    // flSpots.add(FlSpot(2, 0));
+    // flSpots.add(FlSpot(3, 2));
+    // flSpots.add(FlSpot(4, 0));
+    // flSpots.add(FlSpot(5, 3));
+    // flSpots.add(FlSpot(6, 0));
+    // flSpots.add(FlSpot(23, 4));
+    _chartProvider = Provider.of<ChartProvider>(context);
+    switch (_chartProvider.chartData) {
+      case ChartData.INIT:
+      case ChartData.LOADING:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [CircularProgressIndicator()],
+        );
+      case ChartData.DONE:
+        return chart(context);
+    }
+  }
+
+  Widget chart(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Container(
@@ -114,7 +130,7 @@ class SmokeChartWidget extends StatelessWidget {
 
   LineChartBarData linesBarData(BuildContext context) {
     return LineChartBarData(
-      spots: flSpots,
+      spots: _chartProvider.spotSmokes,
       isCurved: false,
       colors: [
         Colors.blue,

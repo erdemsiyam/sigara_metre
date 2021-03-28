@@ -3,13 +3,15 @@ import 'package:sigara_metre/pages/home/enum/stress_enum.dart';
 import 'package:sigara_metre/model/smoke.dart';
 import 'package:sigara_metre/repository/smoke_repository.dart';
 
+enum TextState { INIT, LOADING, DONE }
+
 class HomeProvider with ChangeNotifier {
   /* Properties */
   static List<Smoke> smokes = [];
-  bool areCountsVisible = true; // TODO geri al
+  TextState textState = TextState.INIT;
   int intTotalSmoke = 0;
   int intTodaySmoke = 0;
-  String strLastSmokeTime = "1h 2m 3s"; // TODO geri al
+  String strLastSmokeTime = "";
 
   // Future<List<Smoke>> getAllSmoke() async {
   //   // smoke liste boş ise sql den çek
@@ -21,22 +23,22 @@ class HomeProvider with ChangeNotifier {
 
   /* Methods */
   void addSmoke(Stress stress) async {
-    // last,today,total yazıları gizlenir
-    areCountsVisible = false; // textler gizlenir
-    notifyListeners();
     // eklenen sigara oluşturulur
-    SmokeRepository smokeRepository = SmokeRepository();
     DateTime dateTimeNow = DateTime.now();
-    Smoke smokeModel = Smoke(dateTimeNow, stress);
+    Smoke smoke = Smoke(dateTimeNow, stress);
     // eklenen sigara db ve stackteki listeye kayıt edilir
-    await smokeRepository.insert(smokeModel);
+    await SmokeRepository().insert(smoke);
     // last,today,total bilgileri yeniden alınır
-    _getCounts();
-    areCountsVisible = true; // textler görünür yapılır
-    notifyListeners();
+    getCounts();
   }
 
-  void _getCounts() async {
+  void getCounts() async {
+    // last,today,total yazıları gizlenir
+    if (textState != TextState.INIT) {
+      textState = TextState.LOADING; // textler gizlenir
+      notifyListeners();
+    }
+
     List<Smoke> smokes = await SmokeRepository().getAll();
     // total count
     intTotalSmoke = smokes.length;
@@ -120,6 +122,10 @@ class HomeProvider with ChangeNotifier {
         }
       }
     }
+
     strLastSmokeTime = _timeLongText;
+
+    textState = TextState.DONE; // textler görünür yapılır
+    notifyListeners();
   }
 }

@@ -57,7 +57,7 @@ class LastTextsWidget extends StatelessWidget {
       children: [
         animationText(
           context,
-          (_homeProvider.areCountsVisible)
+          (_homeProvider.textState == TextState.DONE)
               ? _homeProvider.strLastSmokeTime
               : '',
           1,
@@ -65,7 +65,7 @@ class LastTextsWidget extends StatelessWidget {
         context.emptyWidgetHeightMedium,
         animationText(
           context,
-          (_homeProvider.areCountsVisible)
+          (_homeProvider.textState == TextState.DONE)
               ? _homeProvider.intTodaySmoke.toString()
               : '',
           2,
@@ -73,7 +73,7 @@ class LastTextsWidget extends StatelessWidget {
         context.emptyWidgetHeightMedium,
         animationText(
           context,
-          (_homeProvider.areCountsVisible)
+          (_homeProvider.textState == TextState.DONE)
               ? _homeProvider.intTotalSmoke.toString()
               : '',
           3,
@@ -84,7 +84,7 @@ class LastTextsWidget extends StatelessWidget {
 
   Widget animationText(BuildContext context, String text, int duration) {
     return AnimatedOpacity(
-      opacity: (_homeProvider.areCountsVisible) ? 1 : 0,
+      opacity: (_homeProvider.textState == TextState.DONE) ? 1 : 0,
       duration: Duration(seconds: duration),
       child: Text(
         text,

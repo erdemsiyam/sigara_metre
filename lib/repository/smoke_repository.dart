@@ -42,4 +42,14 @@ class SmokeRepository {
     }
     return _smokes;
   }
+
+  Future<bool> deleteAll() async {
+    DatabaseHelper dbHelper = DatabaseHelper();
+    Database db = await dbHelper.getDatabase();
+    if (await db.delete(dbHelper.tableSmoke) > -1) {
+      _smokes.clear();
+      return true;
+    }
+    return false;
+  }
 }

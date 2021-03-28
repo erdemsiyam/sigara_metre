@@ -26,6 +26,7 @@ class DatabaseHelper {
       _database = await DatabaseHelper()._initializeDatabase();
     return _database;
   }
+  ///data/user/0/com.xaerion.sigara_metre/app_flutter/asset/smoke_counter.db
 
   _initializeDatabase() async {
     Directory klasor = await getApplicationDocumentsDirectory();
