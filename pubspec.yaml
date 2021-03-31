@@ -30,7 +30,7 @@ dependencies:
   provider: ^5.0.0 # provider paketi
   sqflite: any # sql için
   path_provider: ^2.0.1 # dosya okuma - sql için
-  flutter_native_admob: ^2.1.0+3 # reklam
+  # flutter_native_admob: ^2.1.0+3 # reklam
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

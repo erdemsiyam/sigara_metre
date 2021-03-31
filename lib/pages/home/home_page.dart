@@ -10,7 +10,7 @@ import 'package:sigara_metre/util/context_extension.dart';
 
 class HomePage extends StatelessWidget {
   HomeProvider _homeProvider;
-  Stress _stress;
+  Stress _stress = Stress.MEDIUM;
   @override
   Widget build(BuildContext context) {
     _homeProvider = Provider.of<HomeProvider>(context, listen: false);
@@ -24,9 +24,10 @@ class HomePage extends StatelessWidget {
           children: [
             Expanded(flex: 1, child: rightButton(context)),
             Expanded(flex: 1, child: SizedBox()),
-            Expanded(flex: 4, child: LastTextsWidget()),
+            Expanded(flex: 6, child: LastTextsWidget()),
             Expanded(flex: 1, child: SizedBox()),
-            Expanded(flex: 4, child: addSmokeWidget(context)),
+            Expanded(flex: 6, child: addSmokeWidget(context)),
+            Expanded(flex: 1, child: SizedBox()),
           ],
         ),
       ),
