@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sigara_metre/pages/chart/chart_page.dart';
 import 'package:sigara_metre/pages/home/enum/stress_enum.dart';
+import 'package:sigara_metre/pages/home/widget/ad_widget.dart';
 import 'package:sigara_metre/pages/home/widget/last_texts_widget.dart';
 import 'package:sigara_metre/provider/chart_provider.dart';
 import 'package:sigara_metre/provider/home_provider.dart';
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
             Expanded(flex: 6, child: LastTextsWidget()),
             Expanded(flex: 1, child: SizedBox()),
             Expanded(flex: 6, child: addSmokeWidget(context)),
-            Expanded(flex: 1, child: SizedBox()),
+            Expanded(flex: 2, child: MyAdWidget()),
           ],
         ),
       ),
