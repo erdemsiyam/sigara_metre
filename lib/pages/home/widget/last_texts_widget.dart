@@ -89,7 +89,7 @@ class LastTextsWidget extends StatelessWidget {
       child: Text(
         text,
         style: context.theme.textTheme.headline5.copyWith(
-          fontSize: context.dynamicShortest(0.08),
+          fontSize: context.dynamicShortest(0.07),
           color: Colors.blue,
         ),
       ),
